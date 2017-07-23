@@ -12,3 +12,7 @@ class Category(models.Model):
 
 class Subcategory(Category):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategories')
+
+
+class Product(Category):
+    subcategories = models.ManyToManyField(Subcategory)
