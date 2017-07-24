@@ -1,10 +1,20 @@
-from products.models import Category
+from products.models import Category, Subcategory
 from rest_framework import serializers
+
+
+class SubcategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Subcategory
+        exclude = ('category',)
+        read_only_fields = ('created_at', 'updated_at')
 
 
 class CategorySerializer(serializers.ModelSerializer):
 
+    subcategories = SubcategorySerializer(many=True, read_only=True)
+
     class Meta:
         model = Category
         fields = '__all__'
-        read_only_fields = ('created_at', 'updated_at')
+        read_only_fields = ('created_at', 'updated_at', 'subcategories')
