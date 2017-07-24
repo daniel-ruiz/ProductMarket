@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Category(models.Model):
+class NamedResource(models.Model):
     name = models.CharField(max_length=60, blank=False, null=False, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -10,15 +10,20 @@ class Category(models.Model):
         return self.name
 
     class Meta:
+        abstract = True
+
+
+class Category(NamedResource):
+    class Meta:
         verbose_name_plural = 'categories'
 
 
-class Subcategory(Category):
+class Subcategory(NamedResource):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategories')
 
     class Meta:
         verbose_name_plural = 'subcategories'
 
 
-class Product(Category):
+class Product(NamedResource):
     subcategories = models.ManyToManyField(Subcategory)
