@@ -46,6 +46,24 @@ class ProductSerializer(serializers.ModelSerializer):
 
         return value
 
+    def create(self, validated_data):
+        subcategory_data = validated_data.pop('subcategories')
+
+        new_product = Product.objects.create(**validated_data)
+        new_product.subcategories = self.__related_subcategories(subcategory_data)
+        new_product.save()
+        return new_product
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name')
+        instance.subcategories = self.__related_subcategories(validated_data.pop('subcategories'))
+        instance.save()
+        return instance
+
+    def __related_subcategories(self, subcategory_data):
+        related_subcategory_names = map(lambda dictionary: dictionary.get('name'), subcategory_data)
+        return SubcategoryManager.with_names(related_subcategory_names)
+
     class Meta:
         model = Product
         fields = '__all__'
