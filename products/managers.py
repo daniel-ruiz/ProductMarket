@@ -11,6 +11,10 @@ class CategoryManager:
 class SubcategoryManager:
 
     @staticmethod
+    def all():
+        return Subcategory.objects.all()
+
+    @staticmethod
     def all_names():
         return Subcategory.objects.values_list('name', flat=True)
 
