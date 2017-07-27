@@ -22,13 +22,18 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ('id', 'name', 'created_at', 'updated_at', 'subcategories')
         read_only_fields = ('created_at', 'updated_at', 'subcategories')
 
 
 class ProductSerializer(serializers.ModelSerializer):
 
     subcategories = SubcategorySerializer(many=True)
+
+    class Meta:
+        model = Product
+        fields = ('id', 'name', 'created_at', 'updated_at', 'subcategories')
+        read_only_fields = ('created_at', 'updated_at')
 
     def validate_subcategories(self, value):
         if value is None or len(value) == 0:
@@ -63,8 +68,3 @@ class ProductSerializer(serializers.ModelSerializer):
     def __related_subcategories(self, subcategory_data):
         related_subcategory_names = map(lambda dictionary: dictionary.get('name'), subcategory_data)
         return SubcategoryManager.with_names(related_subcategory_names)
-
-    class Meta:
-        model = Product
-        fields = '__all__'
-        read_only_fields = ('created_at', 'updated_at')
