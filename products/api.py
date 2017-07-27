@@ -1,6 +1,5 @@
 from rest_framework.decorators import api_view
 from rest_framework.generics import ListAPIView, get_object_or_404
-from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from products.managers import CategoryManager, ProductManager, SubcategoryManager
