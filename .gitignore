@@ -99,3 +99,5 @@ fabric.properties
 .idea/
 
 # End of https://www.gitignore.io/api/macos,django,pycharm+all
+
+.env
