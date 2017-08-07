@@ -3,12 +3,12 @@ from rest_framework.generics import ListAPIView, get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from products.pagination import ProductMarketPagination
-from products.serializers import CategorySerializer, ProductSerializer
+from products.api.rest.v1_0.serializers import CategorySerializer, ProductSerializer
 from products.models import Category, Subcategory, Product
+from products.pagination import ProductMarketPagination
 
 
-class CategoryListAPI(ListAPIView):
+class CategoryListAPIController(ListAPIView):
 
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -18,7 +18,7 @@ class CategoryListAPI(ListAPIView):
     ordering_fields = ('name', 'created_at', 'updated_at')
 
 
-class ProductAPI(ModelViewSet):
+class ProductAPIController(ModelViewSet):
 
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -28,7 +28,7 @@ class ProductAPI(ModelViewSet):
     ordering_fields = ('name', 'created_at', 'updated_at')
 
 
-class SubcategoryProductsAPI(APIView):
+class SubcategoryProductsAPIController(APIView):
 
     filter_backends = (SearchFilter, OrderingFilter)
     search_fields = ('name',)
