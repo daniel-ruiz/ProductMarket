@@ -3,7 +3,7 @@ from rest_framework.generics import ListAPIView, get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from products.api.rest.v1_0.serializers import CategorySerializer, ProductSerializer
+from products.api.rest.v1_0.api_serializers import CategorySerializer, ProductSerializer
 from products.models import Category, Subcategory, Product
 from products.pagination import ProductMarketPagination
 
