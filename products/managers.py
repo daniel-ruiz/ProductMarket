@@ -1,30 +1,25 @@
-from products.models import Category, Product, Subcategory
+from django.db import models
 
 
-class CategoryManager:
+class CategoryManager(models.Manager):
 
-    @staticmethod
-    def all():
-        return Category.objects.all()
-
-
-class SubcategoryManager:
-
-    @staticmethod
-    def all():
-        return Subcategory.objects.all()
-
-    @staticmethod
-    def all_names():
-        return Subcategory.objects.values_list('name', flat=True)
-
-    @staticmethod
-    def with_names(names):
-        return Subcategory.objects.filter(name__in=names)
+    def all(self):
+        return self.model.objects.all()
 
 
-class ProductManager:
+class SubcategoryManager(models.Manager):
 
-    @staticmethod
-    def all():
-        return Product.objects.all()
+    def all(self):
+        return self.model.objects.all()
+
+    def all_names(self):
+        return self.model.objects.values_list('name', flat=True)
+
+    def with_names(self, names):
+        return self.model.objects.filter(name__in=names)
+
+
+class ProductManager(models.Manager):
+
+    def all(self):
+        return self.model.objects.all()

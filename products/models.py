@@ -1,5 +1,7 @@
 from django.db import models
 
+from products import managers
+
 
 class NamedResource(models.Model):
     name = models.CharField(max_length=60, blank=False, null=False, unique=True)
@@ -14,11 +16,16 @@ class NamedResource(models.Model):
 
 
 class Category(NamedResource):
+
+    objects = managers.CategoryManager()
+
     class Meta:
         verbose_name_plural = 'categories'
 
 
 class Subcategory(NamedResource):
+
+    objects = managers.SubcategoryManager()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategories')
 
     class Meta:
@@ -26,4 +33,6 @@ class Subcategory(NamedResource):
 
 
 class Product(NamedResource):
+
+    objects = managers.ProductManager()
     subcategories = models.ManyToManyField(Subcategory)

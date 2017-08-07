@@ -1,4 +1,3 @@
-from products.managers import SubcategoryManager
 from products.models import Category, Subcategory, Product
 from rest_framework import serializers
 
@@ -39,7 +38,7 @@ class ProductSerializer(serializers.ModelSerializer):
         if value is None or len(value) == 0:
             raise serializers.ValidationError('A product must be related to at least one existing subcategory')
 
-        subcategory_names = SubcategoryManager.all_names()
+        subcategory_names = Subcategory.objects.all_names()
 
         for subcategory_data in value:
             subcategory_name = subcategory_data.get('name')
@@ -67,4 +66,4 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def __related_subcategories(self, subcategory_data):
         related_subcategory_names = map(lambda dictionary: dictionary.get('name'), subcategory_data)
-        return SubcategoryManager.with_names(related_subcategory_names)
+        return Subcategory.objects.with_names(related_subcategory_names)
