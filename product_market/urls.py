@@ -16,9 +16,10 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from products import urls as product_urls
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/1\.0/', include(product_urls))
+    url(
+        r'^api/',
+        include('product_market.api_core.api_urls')
+    )
 ]
